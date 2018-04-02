@@ -1,0 +1,26 @@
+"""
+Given a string, find the length of the longest substring without repeating characters.
+Examples:
+Given "abcabcbb", the answer is "abc", which the length is 3.
+Given "bbbbb", the answer is "b", with the length of 1.
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+"""
+
+""""
+思路：每个字母最新的index作为dict的value，计算长度
+要考虑到结束还没遇到重复这种情况
+"""
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        dic, maxLen, start, = {}, 0, 0
+        for i, ch in enumerate(s):
+            # when char already in dictionary
+            if ch in dic:
+                # check length from start of string to index
+                res = max(maxLen, i-start)
+                # update start of string index to the next index
+                start = max(start, dic[ch]+1)
+            # add/update char to/of dictionary
+            dic[ch] = i
+        # answer is either in the begining/middle or some mid to the end of string
+        return max(maxLen, len(s)-start)
