@@ -1,0 +1,32 @@
+"""
+Given a string s, 找出最长的回文序列.
+
+Example:
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+ 
+Example:
+Input: "cbbd"
+Output: "bb"
+
+"""
+
+"""
+利用函数，O(n2)
+"""
+
+
+class Solution(object):
+    def longestPalindrome(self, s):
+        res = ""
+        for i in range(len(s)):
+            #回文序列分2种：ABA,ABBA
+            res = max(self.helper(s, i, i), self.helper(s, i, i + 1), res, key=len)
+        return res
+
+    def helper(self, s, l, r):
+        while 0 <= l and r < len(s) and s[l] == s[r]:
+            l -= 1;
+            r += 1
+        return s[l + 1:r]
