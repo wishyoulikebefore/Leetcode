@@ -14,13 +14,10 @@ class Solution(object):
     def lengthOfLongestSubstring(self, s):
         dic, maxLen, start, = {}, 0, 0
         for i, ch in enumerate(s):
-            # when char already in dictionary
             if ch in dic:
-                # check length from start of string to index
                 res = max(maxLen, i-start)
-                # update start of string index to the next index
+                # 重置start位置：出现连续重复后之前的字符串作废，如abcca中，abcc的start为dic[ch]+1，a的start不变
                 start = max(start, dic[ch]+1)
-            # add/update char to/of dictionary
             dic[ch] = i
         # answer is either in the begining/middle or some mid to the end of string
         return max(maxLen, len(s)-start)
